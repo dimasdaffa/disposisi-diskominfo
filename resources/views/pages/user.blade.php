@@ -9,6 +9,13 @@
             $('#editModal input#name').val($(this).data('name'));
             $('#editModal input#phone').val($(this).data('phone'));
             $('#editModal input#email').val($(this).data('email'));
+
+            // Set role dropdown value
+            $('#editModal select#edit_role').val($(this).data('role'));
+
+            // Clear password field
+            $('#editModal input#edit_password').val('');
+
             if ($(this).data('active') == 1) {
                 $('#editModal input#is_active').attr('checked', 1)
             } else {
@@ -38,6 +45,7 @@
                     <th>{{ __('model.user.name') }}</th>
                     <th>{{ __('model.user.email') }}</th>
                     <th>{{ __('model.user.phone') }}</th>
+                    <th>Role</th>
                     <th>{{ __('model.user.is_active') }}</th>
                     <th>{{ __('menu.general.action') }}</th>
                 </tr>
@@ -49,6 +57,7 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone }}</td>
+                            <td><span class="badge bg-label-{{ $user->role == 'admin' ? 'danger' : 'info' }} me-1">{{ ucfirst($user->role) }}</span></td>
                             <td><span
                                     class="badge bg-label-primary me-1">{{  __('model.user.' . ($user->is_active ? 'active' : 'nonactive')) }}</span>
                             </td>
@@ -59,6 +68,7 @@
                                         data-email="{{ $user->email }}"
                                         data-phone="{{ $user->phone }}"
                                         data-active="{{ $user->is_active }}"
+                                        data-role="{{ $user->role }}"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editModal">
                                     {{ __('menu.general.edit') }}
@@ -76,7 +86,7 @@
                 @else
                     <tbody>
                     <tr>
-                        <td colspan="4" class="text-center">
+                        <td colspan="6" class="text-center">
                             {{ __('menu.general.empty') }}
                         </td>
                     </tr>
@@ -87,6 +97,7 @@
                     <th>{{ __('model.user.name') }}</th>
                     <th>{{ __('model.user.email') }}</th>
                     <th>{{ __('model.user.phone') }}</th>
+                    <th>Role</th>
                     <th>{{ __('model.user.is_active') }}</th>
                     <th>{{ __('menu.general.action') }}</th>
                 </tr>
@@ -115,6 +126,19 @@
                     <x-input-form name="name" :label="__('model.user.name')"/>
                     <x-input-form name="email" :label="__('model.user.email')" type="email"/>
                     <x-input-form name="phone" :label="__('model.user.phone')"/>
+
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <select class="form-select" id="role" name="role" required>
+                            <option value="staff">Staff</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" required>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
@@ -146,13 +170,24 @@
                     <x-input-form name="name" :label="__('model.user.name')"/>
                     <x-input-form name="email" :label="__('model.user.email')" type="email"/>
                     <x-input-form name="phone" :label="__('model.user.phone')"/>
+
+                    <div class="mb-3">
+                        <label for="edit_role" class="form-label">Role</label>
+                        <select class="form-select" id="edit_role" name="role">
+                            <option value="staff">Staff</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit_password" class="form-label">New Password (Leave blank to keep current)</label>
+                        <input type="password" id="edit_password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
+                        <div class="form-text">Only fill this field if you want to change the user's password.</div>
+                    </div>
+
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="is_active" value="true" id="is_active">
                         <label class="form-check-label" for="is_active"> {{ __('model.user.is_active') }} </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="reset_password" value="true" id="reset_password">
-                        <label class="form-check-label" for="reset_password"> {{ __('model.user.reset_password') }} </label>
                     </div>
                 </div>
                 <div class="modal-footer">

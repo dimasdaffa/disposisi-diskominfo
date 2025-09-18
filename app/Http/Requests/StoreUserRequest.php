@@ -27,6 +27,8 @@ class StoreUserRequest extends FormRequest
             'name' => __('model.user.name'),
             'email' => __('model.user.email'),
             'phone' => __('model.user.phone'),
+            'password' => __('model.user.password'),
+            'role' => __('model.user.role'),
         ];
     }
 
@@ -38,9 +40,11 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'email' => ['required', Rule::unique('users')],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')],
             'phone' => ['nullable'],
+            'password' => ['required', 'string', 'min:8'],
+            'role' => ['required', 'string', 'in:admin,staff'],
         ];
     }
 }

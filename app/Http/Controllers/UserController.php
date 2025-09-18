@@ -38,9 +38,16 @@ class UserController extends Controller
     public function store(StoreUserRequest $request): RedirectResponse
     {
         try {
-            $newUser = $request->validated();
-            $newUser['password'] = Hash::make(Config::getValueByCode(ConfigEnum::DEFAULT_PASSWORD));
-            User::create($newUser);
+            // Get all validated data
+            $data = $request->validated();
+
+            // Hash the password from the request input
+            $data['password'] = Hash::make($request->password);
+
+            // The 'role' is already included from validated() data
+            // $data['role'] = $request->role; // This line is not needed as it's handled by validated()
+
+            User::create($data);
             return back()->with('success', __('menu.general.success'));
         } catch (\Throwable $exception) {
             return back()->with('error', $exception->getMessage());
@@ -57,11 +64,23 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         try {
-            $newUser = $request->validated();
-            $newUser['is_active'] = isset($newUser['is_active']);
-            if ($request->reset_password)
-                $newUser['password'] = Hash::make(Config::getValueByCode(ConfigEnum::DEFAULT_PASSWORD));
-            $user->update($newUser);
+            $data = $request->validated();
+            $data['is_active'] = isset($data['is_active']);
+
+            // Handle password update
+            if (!empty($data['password'])) {
+                $data['password'] = Hash::make($data['password']);
+            } else {
+                // Remove password from update data if not provided
+                unset($data['password']);
+            }
+
+            // Handle reset_password functionality (keep existing functionality)
+            if ($request->reset_password) {
+                $data['password'] = Hash::make(Config::getValueByCode(ConfigEnum::DEFAULT_PASSWORD));
+            }
+
+            $user->update($data);
             return back()->with('success', __('menu.general.success'));
         } catch (\Throwable $exception) {
             return back()->with('error', $exception->getMessage());

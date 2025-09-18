@@ -98,6 +98,42 @@
             </div>
 
             @if(auth()->user()->role == 'staff')
+            <!-- Change Password Card for Staff -->
+            <div class="card mb-4">
+                <h5 class="card-header">Change Password</h5>
+                <div class="card-body">
+                    <form action="{{ route('profile.password.update') }}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">New Password</label>
+                                    <input type="password" id="password" class="form-control @error('password', 'updatePassword') is-invalid @enderror" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" required>
+                                    @error('password', 'updatePassword')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="password_confirmation" class="form-label">Confirm New Password</label>
+                                    <input type="password" id="password_confirmation" class="form-control @error('password_confirmation', 'updatePassword') is-invalid @enderror" name="password_confirmation" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" required>
+                                    @error('password_confirmation', 'updatePassword')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-primary me-2">Update Password</button>
+                            <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Deactivate Account Card for Staff -->
             <div class="card">
                 <h5 class="card-header">{{ __('navbar.profile.deactivate_account') }}</h5>
                 <div class="card-body">

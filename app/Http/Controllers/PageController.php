@@ -17,6 +17,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -153,6 +154,33 @@ class PageController extends Controller
             }
             $attachment->delete();
             return back()->with('success', __('menu.general.success'));
+        } catch (\Throwable $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function passwordUpdate(Request $request): RedirectResponse
+    {
+        try {
+            // Simple validation for staff users - no current password required
+            $request->validate([
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ], [], [
+                'password' => 'Password',
+            ]);
+
+            // Update password directly for staff users
+            auth()->user()->update([
+                'password' => Hash::make($request->password)
+            ]);
+
+            return back()->with('success', 'Password updated successfully');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()->withErrors($e->errors(), 'updatePassword');
         } catch (\Throwable $exception) {
             return back()->with('error', $exception->getMessage());
         }

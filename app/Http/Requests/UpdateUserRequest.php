@@ -27,6 +27,8 @@ class UpdateUserRequest extends FormRequest
             'name' => __('model.user.name'),
             'email' => __('model.user.email'),
             'phone' => __('model.user.phone'),
+            'password' => __('model.user.password'),
+            'role' => __('model.user.role'),
         ];
     }
 
@@ -41,6 +43,8 @@ class UpdateUserRequest extends FormRequest
             'name' => ['required'],
             'email' => ['required', Rule::unique('users')->ignore($this->id)],
             'phone' => ['nullable'],
+            'password' => ['nullable', 'string', 'min:8'],
+            'role' => ['required', 'string', 'in:admin,staff'],
             'is_active' => ['nullable'],
         ];
     }
