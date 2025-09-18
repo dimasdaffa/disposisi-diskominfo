@@ -15,6 +15,9 @@ class ConfigSeeder extends Seeder
      */
     public function run(): void
     {
+        // Delete existing data to avoid duplicates if seeder is run again
+        Config::query()->delete();
+
         Config::insert([
             [
                 'code' => 'default_password',
@@ -26,15 +29,15 @@ class ConfigSeeder extends Seeder
             ],
             [
                 'code' => 'app_name',
-                'value' => 'Aplikasi Surat Menyurat',
+                'value' => 'Aplikasi Disposisi Surat Diskominfo',
             ],
             [
                 'code' => 'institution_name',
-                'value' => '404nfid',
+                'value' => 'Diskominfo Kota Semarang',
             ],
             [
                 'code' => 'institution_address',
-                'value' => 'Jl. Padat Karya',
+                'value' => 'Jl. Semarang',
             ],
             [
                 'code' => 'institution_phone',
@@ -50,7 +53,7 @@ class ConfigSeeder extends Seeder
             ],
             [
                 'code' => 'pic',
-                'value' => 'M. Iqbal Effendi',
+                'value' => 'Jenna Jenkins',
             ],
         ]);
     }

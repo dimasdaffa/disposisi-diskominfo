@@ -44,7 +44,7 @@ return [
         'save' => 'Simpan',
         'update' => 'Perbarui',
         'cancel' => 'Batal',
-        'filter' => 'Saring',
+        'filter' => 'Filter',
         'empty' => 'Tidak Ada Data',
         'action' => 'Aksi',
         'open' => 'Buka',

@@ -15,6 +15,9 @@ class DispositionSeeder extends Seeder
      */
     public function run(): void
     {
+        // Delete existing data to avoid duplicates if seeder is run again
+        Disposition::query()->delete();
+
         Disposition::factory()->count(15)->create();
     }
 }

@@ -51,6 +51,9 @@
           href="{{asset('sneat/vendor/css/theme-default.css')}}"/>
     <link rel="stylesheet" href="{{asset('sneat/css/demo.css')}}"/>
 
+    <!-- Custom Red Theme CSS -->
+    <link rel="stylesheet" href="{{asset('css/app.css')}}"/>
+
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{asset('sneat/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}"/>
     <link rel="stylesheet" href="{{asset('sneat/vendor/libs/sweetalert2/sweetalert2.min.css')}}"/>

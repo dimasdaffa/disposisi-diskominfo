@@ -1,5 +1,5 @@
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-    <div class="app-brand demo">
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color: #DC3545 !important;">
+    <div class="app-brand demo" style="background-color: white !important; padding: 10px; margin: 0; border-radius: 0;">
         <a href="{{ route('home') }}" class="app-brand-link">
             <img src="{{ asset('logodiksominfo.png') }}" alt="{{ config('app.name') }}" width="160">
         </a>

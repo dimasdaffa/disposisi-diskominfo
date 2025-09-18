@@ -15,6 +15,9 @@ class LetterSeeder extends Seeder
      */
     public function run(): void
     {
+        // Delete existing data to avoid duplicates if seeder is run again
+        Letter::query()->delete();
+
         Letter::factory()->count(50)->create();
     }
 }

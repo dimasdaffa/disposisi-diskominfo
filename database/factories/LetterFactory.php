@@ -18,6 +18,8 @@ class LetterFactory extends Factory
      */
     public function definition(): array
     {
+        $classificationCodes = ['UMM', 'UND', 'PEG', 'KEU', 'TIK', 'HKM', 'HUM'];
+
         return [
             'reference_number' => $this->faker->ean13(),
             'agenda_number' => $this->faker->randomNumber(5),
@@ -28,7 +30,7 @@ class LetterFactory extends Factory
             'description' => $this->faker->sentence(7),
             'note' => $this->faker->sentence(3),
             'type' => $this->faker->randomElement([LetterType::INCOMING->type(), LetterType::OUTGOING->type()]),
-            'classification_code' => 'ADM',
+            'classification_code' => $this->faker->randomElement($classificationCodes),
             'user_id' => 1,
         ];
     }

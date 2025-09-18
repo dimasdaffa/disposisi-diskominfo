@@ -17,6 +17,9 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // Delete existing data to avoid duplicates if seeder is run again
+        User::query()->delete();
+
         User::factory()->create([
             'name' => 'Administrator',
             'email' => 'admin@admin.com',

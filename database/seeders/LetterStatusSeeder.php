@@ -15,6 +15,9 @@ class LetterStatusSeeder extends Seeder
      */
     public function run(): void
     {
+        // Delete existing data to avoid duplicates if seeder is run again
+        LetterStatus::query()->delete();
+
         LetterStatus::insert([
             [
                 'status' => 'Rahasia',
